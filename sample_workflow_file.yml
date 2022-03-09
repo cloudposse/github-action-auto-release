@@ -1,0 +1,16 @@
+name: "auto-release"
+on:
+  push:
+    branches:
+      - main
+      - master
+      - production
+  workflow_dispatch:
+
+jobs:
+  auto-release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: cloudposse/github-action-auto-release@main
+      with:
+        special-token: ${{ secrets.PUBLIC_REPO_ACCESS_TOKEN }}
