@@ -29,7 +29,8 @@
 -->
 
 Github Action Auto-release drafts release notes for a repo's next upcoming release and keeps those notes updated as merges are made into the default branch.
-This action will also automatically make a new release with every merge into the default branch, unless the pull request that was used for the merge has the `no-release` label.
+
+Under default settings, Auto-release will also cut a new release from the default branch after every merge into it. However, releases are not cut for merges of pull requests with a `no-release` label attached. In that case, the release notes are left as a draft and a release with all unreleased changes will be made the next time a pull request without the `no-release` label is merged into the default branch.
 
 ---
 
@@ -65,7 +66,7 @@ It's 100% Open Source and licensed under the [APACHE2](LICENSE).
 
 
 
-Copy the `sample_workflow_file.yaml` file from this repository into the `.github/workflows` folder of the repository to which you'd like to add Auto-release functionality.
+Copy the `sample_workflow_file.yml` file from this repository into the `.github/workflows` folder of the repository to which you'd like to add Auto-release functionality.
 This will cause Auto-release functionality to execute whenever merges are made into the default branch.
 
 
