@@ -91,7 +91,7 @@ Check out these related projects.
 - [GitHub Action Auto-format](https://github.com/cloudposse/github-action-auto-format) - Add standard files to a repo and keep its README up to date
 - [GitHub Action Terraform Auto-context](https://github.com/cloudposse/github-action-terraform-auto-context) - Automatically update `context.tf` whenever a new version becomes available
 - [GitHub Action Terraform CI](https://github.com/cloudposse/github-action-terraform-ci) - Full suite of Terraform CI actions, along with chatops support
-- [GitHub Action Validate CODEOWNERS](https://github.com/cloudposse/github-action-validate-codeowners) - GitHub Action to validate conents of CODEOWNERS file
+- [GitHub Action Validate CODEOWNERS](https://github.com/cloudposse/github-action-validate-codeowners) - Validate and lint contents of CODEOWNERS file
 
 ## Help
 
