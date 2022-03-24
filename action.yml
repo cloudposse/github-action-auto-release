@@ -2,7 +2,7 @@ name: "github-action-auto-release"
 description: "Draft your next Release notes as Pull Requests are merged into main"
 inputs:
   token:
-    description: "Standard GitHub token (e.g., ${{ secrets.GITHUB_TOKEN }})"
+    description: "Standard GitHub token (e.g., secrets.GITHUB_TOKEN)"
     required: false
 runs:
   using: "composite"
