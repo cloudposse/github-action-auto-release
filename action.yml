@@ -11,7 +11,8 @@ runs:
     - uses: actions-ecosystem/action-get-merged-pull-request@v1
       id: get-merged-pull-request
       with:
-        github_token: ${{ inputs.special-token }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        #github_token: ${{ inputs.special-token }}
     # Drafts your next Release notes as Pull Requests are merged into "main"
     - uses: release-drafter/release-drafter@v5
       with:
@@ -19,4 +20,5 @@ runs:
         prerelease: false
         config-name: auto-release.yml
       env:
-        GITHUB_TOKEN: ${{ inputs.special-token }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        #GITHUB_TOKEN: ${{ inputs.special-token }}
