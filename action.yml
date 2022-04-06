@@ -8,7 +8,7 @@ inputs:
     description: "Whether to publish a new release immediately"
     required: false
     default: true
-  prerelase:
+  prerelease:
     description: "Boolean indicating whether this release should be a prerelease"
     required: false
     default: false
