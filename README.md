@@ -1,6 +1,6 @@
 
 <!-- markdownlint-disable -->
-# GitHub Action Auto-release
+# GitHub Action Auto-release [![Build Status](https://github.com/cloudposse/build-harness/workflows/docker/badge.svg?branch=master)](https://github.com/cloudposse/build-harness/actions?query=workflow%3Adocker) [![Latest Release](https://img.shields.io/github/release/cloudposse/build-harness.svg)](https://github.com/cloudposse/build-harness/releases/latest) [![Slack Community](https://slack.cloudposse.com/badge.svg)](https://slack.cloudposse.com)
 <!-- markdownlint-restore -->
 
 [![README Header][readme_header_img]][readme_header_link]
@@ -72,6 +72,11 @@ This will cause Auto-release functionality to execute whenever merges are made i
 
 
 
+## Examples
+
+Here's a real world example:
+- [`github-action-auto-release`](https://github.com/cloudposse/github-action-auto-release/.github/workflows/auto-release.yml) - The self-testing Cloud Posse Auto-format GitHub Action
+
 
 
 
@@ -92,6 +97,15 @@ Check out these related projects.
 - [GitHub Action Terraform Auto-context](https://github.com/cloudposse/github-action-terraform-auto-context) - Automatically update `context.tf` whenever a new version becomes available
 - [GitHub Action Terraform CI](https://github.com/cloudposse/github-action-terraform-ci) - Full suite of Terraform CI actions, along with chatops support
 - [GitHub Action Validate CODEOWNERS](https://github.com/cloudposse/github-action-validate-codeowners) - Validate and lint contents of CODEOWNERS file
+
+
+## References
+
+For additional context, refer to some of these links.
+
+- [Action get Merged Pull Request](https://github.com/actions-ecosystem/action-get-merged-pull-request) - Get the pull request associated with a commit
+- [Release Drafter](https://github.com/release-drafter/release-drafter) - Drafts your next release notes as pull requests are merged into master
+
 
 ## Help
 

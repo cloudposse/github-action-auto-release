@@ -12,4 +12,6 @@ jobs:
     steps:
     - uses: cloudposse/github-action-auto-release@main
       with:
-        special-token: ${{ secrets.PUBLIC_REPO_ACCESS_TOKEN }}
+        prerelease: false
+        publish: true
+        token: ${{ secrets.GITHUB_TOKEN }}

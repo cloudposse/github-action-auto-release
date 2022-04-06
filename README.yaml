@@ -7,9 +7,6 @@
 # Name of this project
 name: GitHub Action Auto-release
 
-# Logo for this project
-#logo: docs/logo.png
-
 # License of this project
 license: "APACHE2"
 
@@ -23,19 +20,16 @@ copyrights:
 github_repo: cloudposse/github-action-auto-release
 
 # Badges to display
-#badges:
-#  - name: "Build Status"
-#    image: "https://github.com/cloudposse/build-harness/workflows/docker/badge.svg?branch=master"
-#    url: "https://github.com/cloudposse/build-harness/actions?query=workflow%3Adocker"
-#  - name: "Latest Release"
-#    image: "https://img.shields.io/github/release/cloudposse/build-harness.svg"
-#    url: "https://github.com/cloudposse/build-harness/releases/latest"
-#  - name: "Slack Community"
-#    image: "https://slack.cloudposse.com/badge.svg"
-#    url: "https://slack.cloudposse.com"
-#  - name: "Discourse Forum"
-#    image: "https://img.shields.io/discourse/https/ask.sweetops.com/posts.svg"
-#    url: "https://ask.sweetops.com/"
+badges:
+  - name: "Build Status"
+    image: "https://github.com/cloudposse/build-harness/workflows/docker/badge.svg?branch=master"
+    url: "https://github.com/cloudposse/build-harness/actions?query=workflow%3Adocker"
+  - name: "Latest Release"
+    image: "https://img.shields.io/github/release/cloudposse/build-harness.svg"
+    url: "https://github.com/cloudposse/build-harness/releases/latest"
+  - name: "Slack Community"
+    image: "https://slack.cloudposse.com/badge.svg"
+    url: "https://slack.cloudposse.com"
 
 related:
   - name: "GitHub Action Auto-format"
@@ -52,16 +46,13 @@ related:
     url: "https://github.com/cloudposse/github-action-validate-codeowners"
 
 # References
-#references:
-#  - name: "Wikipedia - Test Harness"
-#    description: 'The `build-harness` is similar in concept to a "Test Harness"'
-#    url: "https://en.wikipedia.org/wiki/Test_harness"
-
-# Screenshots
-#screenshots:
-#  - name: "demo"
-#    description: "Example of using the `build-harness` to build a docker image"
-#    url: "https://cdn.rawgit.com/cloudposse/build-harness/master/docs/demo.svg"
+references:
+  - name: "Action get Merged Pull Request"
+    description: 'Get the pull request associated with a commit'
+    url: "https://github.com/actions-ecosystem/action-get-merged-pull-request"
+  - name: "Release Drafter"
+    description: 'Drafts your next release notes as pull requests are merged into master'
+    url: "https://github.com/release-drafter/release-drafter"
 
 # Short description of this project
 description: |-
@@ -69,34 +60,21 @@ description: |-
 
   Under default settings, Auto-release will also cut a new release from the default branch after every merge into it. However, releases are not cut for merges of pull requests with a `no-release` label attached. In that case, the release notes are left as a draft and a release with all unreleased changes will be made the next time a pull request without the `no-release` label is merged into the default branch.
 
-# Introduction to the project
-#introduction: |-
-#  This is an introduction.
-
 # How to use this project
 usage: |-
   Copy the `sample_workflow_file.yml` file from this repository into the `.github/workflows` folder of the repository to which you'd like to add Auto-release functionality.
   This will cause Auto-release functionality to execute whenever merges are made into the default branch.
 
 # Example usage
-#examples: |-
-#  Here are some real world examples:
-#  - [`github-authorized-keys`](https://github.com/cloudposse/github-authorized-keys/) - A Golang project that leverages `docker/%`, `go/%`, `travis/%` targets
-#  - [`charts`](https://github.com/cloudposse/charts/) - A collection of Helm Charts that leverages `docker/%` and `helm/%` targets
-#  - [`bastion`](https://github.com/cloudposse/bastion/) - A docker image that leverages `docker/%` and `bash/lint` targets
-#  - [`terraform-null-label`](https://github.com/cloudposse/terraform-null-label/) - A terraform module that leverages `terraform/%` targets
+examples: |-
+  Here's a real world example:
+  - [`github-action-auto-release`](https://github.com/cloudposse/github-action-auto-release/.github/workflows/auto-release.yml) - The self-testing Cloud Posse Auto-format GitHub Action
 
 # How to get started quickly
 #quickstart: |-
 #  Here's how to get started...
 #  1. `git clone https://github.com/cloudposse/build-harness.git` to pull down the repository
 #  2. `make init` to initialize the [`build-harness`](https://github.com/cloudposse/build-harness/)
-
-# Other files to include in this README from the project folder
-#include:
-#  - "docs/targets.md"
-#  - "docs/extensions.md"
-#  - "docs/auto-init.md"
 
 # Contributors to this project
 contributors:
