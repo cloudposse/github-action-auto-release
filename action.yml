@@ -16,11 +16,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    # Get PR from merged commit to master
-    - uses: actions-ecosystem/action-get-merged-pull-request@v1
-      id: get-merged-pull-request
-      with:
-        github_token: ${{ inputs.token }}
     # Drafts your next Release notes as Pull Requests are merged into "main"
     - uses: release-drafter/release-drafter@v5
       with:
