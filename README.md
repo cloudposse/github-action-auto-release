@@ -66,10 +66,15 @@ It's 100% Open Source and licensed under the [APACHE2](LICENSE).
 
 
 
-Copy the `sample_workflow_file.yml` file from this repository into the `.github/workflows` folder of the repository to which you'd like to add Auto-release functionality.
+Copy the `.github/workflows/auto-release.yml` and `.github/auto-release.yml` files from this repository into the corresponding folders of the repository to which you'd like to add Auto-release functionality.
 This will cause Auto-release functionality to execute whenever merges are made into the default branch.
 
+## Quick Start
 
+Here's how to get started...
+1. Copy the `.github/workflows/auto-release.yml` github action workflow from this repository into the corresponding folder of the target repo
+2. Copy the `.github/auto-release.yml` auto-release config file from this repository into the corresponding folder of the target repo
+3. Customize the config file as desired, per the [config documentation](https://github.com/release-drafter/release-drafter#configuration)
 
 
 ## Examples

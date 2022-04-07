@@ -62,7 +62,7 @@ description: |-
 
 # How to use this project
 usage: |-
-  Copy the `sample_workflow_file.yml` file from this repository into the `.github/workflows` folder of the repository to which you'd like to add Auto-release functionality.
+  Copy the `.github/workflows/auto-release.yml` and `.github/auto-release.yml` files from this repository into the corresponding folders of the repository to which you'd like to add Auto-release functionality.
   This will cause Auto-release functionality to execute whenever merges are made into the default branch.
 
 # Example usage
@@ -71,10 +71,11 @@ examples: |-
   - [`github-action-auto-release`](https://github.com/cloudposse/github-action-auto-release/.github/workflows/auto-release.yml) - The self-testing Cloud Posse Auto-format GitHub Action
 
 # How to get started quickly
-#quickstart: |-
-#  Here's how to get started...
-#  1. `git clone https://github.com/cloudposse/build-harness.git` to pull down the repository
-#  2. `make init` to initialize the [`build-harness`](https://github.com/cloudposse/build-harness/)
+quickstart: |-
+  Here's how to get started...
+  1. Copy the `.github/workflows/auto-release.yml` github action workflow from this repository into the corresponding folder of the target repo
+  2. Copy the `.github/auto-release.yml` auto-release config file from this repository into the corresponding folder of the target repo
+  3. Customize the config file as desired, per the [config documentation](https://github.com/release-drafter/release-drafter#configuration)
 
 # Contributors to this project
 contributors:
