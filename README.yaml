@@ -1,0 +1,83 @@
+---
+#
+# This is the canonical configuration for the `README.md`
+# Run `make readme` to rebuild the `README.md`
+#
+
+# Name of this project
+name: GitHub Action Auto-release
+
+# License of this project
+license: "APACHE2"
+
+# Copyrights
+copyrights:
+  - name: "Cloud Posse, LLC"
+    url: "https://cloudposse.com"
+    year: "2022"
+
+# Canonical GitHub repo
+github_repo: cloudposse/github-action-auto-release
+
+# Badges to display
+badges:
+  - name: "Build Status"
+    image: "https://github.com/cloudposse/build-harness/workflows/docker/badge.svg?branch=master"
+    url: "https://github.com/cloudposse/build-harness/actions?query=workflow%3Adocker"
+  - name: "Latest Release"
+    image: "https://img.shields.io/github/release/cloudposse/build-harness.svg"
+    url: "https://github.com/cloudposse/build-harness/releases/latest"
+  - name: "Slack Community"
+    image: "https://slack.cloudposse.com/badge.svg"
+    url: "https://slack.cloudposse.com"
+
+related:
+  - name: "GitHub Action Auto-format"
+    description: "Add standard files to a repo and keep its README up to date"
+    url: "https://github.com/cloudposse/github-action-auto-format"
+  - name: "GitHub Action Terraform Auto-context"
+    description: "Automatically update `context.tf` whenever a new version becomes available"
+    url: "https://github.com/cloudposse/github-action-terraform-auto-context"
+  - name: "GitHub Action Terraform CI"
+    description: "Full suite of Terraform CI actions, along with chatops support"
+    url: "https://github.com/cloudposse/github-action-terraform-ci"
+  - name: "GitHub Action Validate CODEOWNERS"
+    description: "Validate and lint contents of CODEOWNERS file"
+    url: "https://github.com/cloudposse/github-action-validate-codeowners"
+
+# References
+references:
+  - name: "Action get Merged Pull Request"
+    description: 'Get the pull request associated with a commit'
+    url: "https://github.com/actions-ecosystem/action-get-merged-pull-request"
+  - name: "Release Drafter"
+    description: 'Drafts your next release notes as pull requests are merged into master'
+    url: "https://github.com/release-drafter/release-drafter"
+
+# Short description of this project
+description: |-
+  This is an opinionated composite Github Action that implements a workflow based on the popular `release-drafter` action to automatically draft releases with release notes that are derived from PR descriptions as they are merged into the default branch. ```
+
+  Under default settings, `auto-release` will also cut a new release from the default branch after every merge into it. However, releases are not cut for merges of pull requests with a `no-release` label attached. In that case, the release notes are left as a draft and a release with all unreleased changes will be made the next time a pull request without the `no-release` label is merged into the default branch.
+
+# How to use this project
+usage: |-
+  Copy the `.github/workflows/auto-release.yml` and `.github/auto-release.yml` files from this repository into the corresponding folders of the repository to which you'd like to add Auto-release functionality.
+  This will trigger the `auto-release` functionality every time merges are made into the default branch.
+
+# Example usage
+examples: |-
+  Here's a real world example:
+  - [`github-action-auto-release`](https://github.com/cloudposse/github-action-auto-release/.github/workflows/auto-release.yml) - The self-testing Cloud Posse Auto-format GitHub Action
+
+# How to get started quickly
+quickstart: |-
+  Here's how to get started...
+  1. Copy the `.github/workflows/auto-release.yml` github action workflow from this repository into the corresponding folder of the target repo
+  2. Copy the `.github/auto-release.yml` auto-release config file from this repository into the corresponding folder of the target repo
+  3. Customize the config file as desired, per the [config documentation](https://github.com/release-drafter/release-drafter#configuration)
+
+# Contributors to this project
+contributors:
+  - name: "Dylan Bannon"
+    github: "dylanbannon"
