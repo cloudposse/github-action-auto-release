@@ -63,7 +63,7 @@ description: |-
 # How to use this project
 usage: |-
   Copy the `.github/workflows/auto-release.yml` and `.github/auto-release.yml` files from this repository into the corresponding folders of the repository to which you'd like to add Auto-release functionality.
-  This will cause Auto-release functionality to execute whenever merges are made into the default branch.
+  This will trigger the `auto-release` functionality every time merges are made into the default branch.
 
 # Example usage
 examples: |-
