@@ -1,6 +1,6 @@
 
 <!-- markdownlint-disable -->
-# GitHub Action Auto-release [![Build Status](https://github.com/cloudposse/build-harness/workflows/docker/badge.svg?branch=master)](https://github.com/cloudposse/build-harness/actions?query=workflow%3Adocker) [![Latest Release](https://img.shields.io/github/release/cloudposse/build-harness.svg)](https://github.com/cloudposse/build-harness/releases/latest) [![Slack Community](https://slack.cloudposse.com/badge.svg)](https://slack.cloudposse.com)
+# GitHub Action Auto-release [![Test Status](https://github.com/cloudposse/github-action-auto-release/workflows/auto-release/badge.svg?branch=main)](https://github.com/cloudposse/github-action-auto-release/actions?query=workflow%3Aauto-release) [![Latest Release](https://img.shields.io/github/release/cloudposse/github-action-auto-release.svg)](https://github.com/cloudposse/github-action-auto-release/releases/latest) [![Slack Community](https://slack.cloudposse.com/badge.svg)](https://slack.cloudposse.com)
 <!-- markdownlint-restore -->
 
 [![README Header][readme_header_img]][readme_header_link]
@@ -28,9 +28,9 @@
 
 -->
 
-Github Action Auto-release drafts release notes for a repo's next upcoming release and keeps those notes updated as merges are made into the default branch.
+This is an opinionated composite Github Action that implements a workflow based on the popular `release-drafter` action to automatically draft releases with release notes that are derived from PR descriptions as they are merged into the default branch. ```
 
-Under default settings, Auto-release will also cut a new release from the default branch after every merge into it. However, releases are not cut for merges of pull requests with a `no-release` label attached. In that case, the release notes are left as a draft and a release with all unreleased changes will be made the next time a pull request without the `no-release` label is merged into the default branch.
+Under default settings, `auto-release` will also cut a new release from the default branch after every merge into it. However, releases are not cut for merges of pull requests with a `no-release` label attached. In that case, the release notes are left as a draft and a release with all unreleased changes will be made the next time a pull request without the `no-release` label is merged into the default branch.
 
 ---
 
@@ -67,7 +67,7 @@ It's 100% Open Source and licensed under the [APACHE2](LICENSE).
 
 
 Copy the `.github/workflows/auto-release.yml` and `.github/auto-release.yml` files from this repository into the corresponding folders of the repository to which you'd like to add Auto-release functionality.
-This will cause Auto-release functionality to execute whenever merges are made into the default branch.
+This will trigger the `auto-release` functionality every time merges are made into the default branch.
 
 ## Quick Start
 

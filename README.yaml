@@ -21,12 +21,12 @@ github_repo: cloudposse/github-action-auto-release
 
 # Badges to display
 badges:
-  - name: "Build Status"
-    image: "https://github.com/cloudposse/build-harness/workflows/docker/badge.svg?branch=master"
-    url: "https://github.com/cloudposse/build-harness/actions?query=workflow%3Adocker"
+  - name: "Test Status"
+    image: "https://github.com/cloudposse/github-action-auto-release/workflows/auto-release/badge.svg?branch=main"
+    url: "https://github.com/cloudposse/github-action-auto-release/actions?query=workflow%3Aauto-release"
   - name: "Latest Release"
-    image: "https://img.shields.io/github/release/cloudposse/build-harness.svg"
-    url: "https://github.com/cloudposse/build-harness/releases/latest"
+    image: "https://img.shields.io/github/release/cloudposse/github-action-auto-release.svg"
+    url: "https://github.com/cloudposse/github-action-auto-release/releases/latest"
   - name: "Slack Community"
     image: "https://slack.cloudposse.com/badge.svg"
     url: "https://slack.cloudposse.com"
