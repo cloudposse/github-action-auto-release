@@ -31,8 +31,11 @@ runs:
     - name: "Move auto-release config file to searchable directory"
       shell: bash
       run: |
-        cp ./${{ inputs.actions-files-checkout-path }}/docs/auto-release.yml ./.github/auto-release.yml
-        ls ./.github/
+        ls -ahlt .
+        ls -ahlt ./.github/
+        #cp ./${{ inputs.actions-files-checkout-path }}/docs/auto-release.yml ./.github/auto-release.yml
+        ln -s ./${{ inputs.actions-files-checkout-path }}/docs/auto-release.yml ./.github/auto-release.yml
+        ls -ahlt ./.github/
 
     # Get PR from merged commit to master so we can leverage some of the meta data, including labels
     - uses: actions-ecosystem/action-get-merged-pull-request@v1
