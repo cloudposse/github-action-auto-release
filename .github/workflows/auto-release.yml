@@ -5,12 +5,14 @@ on:
       - main
       - master
       - production
+  workflow_dispatch:
+
 
 jobs:
   auto-release:
     runs-on: ubuntu-latest
     steps:
-    - uses: cloudposse/github-action-auto-release@main
+    - uses: cloudposse/github-action-auto-release@bake-in-config-file
       with:
         prerelease: false
         publish: true
