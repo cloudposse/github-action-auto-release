@@ -20,6 +20,12 @@ inputs:
 runs:
   using: "composite"
   steps:
+    # Get PR from merged commit to master so we can leverage some of the meta data, including labels
+    - uses: actions-ecosystem/action-get-merged-pull-request@v1
+      id: get-merged-pull-request
+      with:
+        github_token: ${{ inputs.token }}
+
     # We need to checkout the config file for this action within a specified workdir to access it within the container steps.
     - name: "Checkout github-action-auto-format repo to load script locally on runner"
       uses: actions/checkout@v2
@@ -36,12 +42,6 @@ runs:
         #cp ./${{ inputs.actions-files-checkout-path }}/docs/auto-release.yml ./.github/auto-release.yml
         ln -s ./${{ inputs.actions-files-checkout-path }}/docs/auto-release.yml ./.github/auto-release.yml
         ls -ahlt ./.github/
-
-    # Get PR from merged commit to master so we can leverage some of the meta data, including labels
-    - uses: actions-ecosystem/action-get-merged-pull-request@v1
-      id: get-merged-pull-request
-      with:
-        github_token: ${{ inputs.token }}
 
     # Drafts the next Release and compiles the notes as Pull Requests are merged into "main" (unless the `no-release` label is used on the PR)
     - uses: release-drafter/release-drafter@v5
