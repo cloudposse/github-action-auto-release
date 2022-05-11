@@ -7,7 +7,6 @@ on:
       - production
   workflow_dispatch:
 
-
 jobs:
   auto-release:
     runs-on: ubuntu-latest
