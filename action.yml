@@ -31,7 +31,7 @@ runs:
     - name: "Move auto-release config file to searchable directory"
       shell: bash
       run: |
-        cp ./${{ inputs.actions-files-checkout-path }}/docs/auto-release.yml ./.github/
+        cp ./${{ inputs.actions-files-checkout-path }}/docs/auto-release.yml ./.github/auto-release.yml
         ls ./.github/
 
     # Get PR from merged commit to master so we can leverage some of the meta data, including labels
