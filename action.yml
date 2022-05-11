@@ -1,6 +1,10 @@
 name: "auto-release"
 description: "Draft your next Release notes as Pull Requests are merged into main"
 inputs:
+  actions-files-checkout-path:
+    description: 'The path to checkout the action scripts to at runtime'
+    default: github-action-auto-release
+    required: false
   token:
     description: "Standard GitHub token (e.g., secrets.GITHUB_TOKEN)"
     required: false
@@ -16,11 +20,26 @@ inputs:
 runs:
   using: "composite"
   steps:
+    # We need to checkout the config file for this action within a specified workdir to access it within the container steps.
+    - name: "Checkout github-action-auto-format repo to load script locally on runner"
+      uses: actions/checkout@v2
+      with:
+        repository: cloudposse/github-action-auto-release
+        path: ${{ inputs.actions-files-checkout-path }}
+
+    # Move the config file to a location where it'll be found by the release-drafter step.
+    - name: "Move auto-release config file to searchable directory"
+      shell: bash
+      run: |
+        cp ./${{ inputs.actions-files-checkout-path }}/docs/auto-release.yml ./.github/
+        ls ./.github/
+
     # Get PR from merged commit to master so we can leverage some of the meta data, including labels
     - uses: actions-ecosystem/action-get-merged-pull-request@v1
       id: get-merged-pull-request
       with:
         github_token: ${{ inputs.token }}
+
     # Drafts the next Release and compiles the notes as Pull Requests are merged into "main" (unless the `no-release` label is used on the PR)
     - uses: release-drafter/release-drafter@v5
       with:
