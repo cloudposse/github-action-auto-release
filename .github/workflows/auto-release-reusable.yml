@@ -1,0 +1,34 @@
+name: "auto-release-reusable"
+on:
+  workflow_call:
+    inputs:
+      actions-files-checkout-path:
+        description: 'The path to checkout the action scripts to at runtime'
+        type: string
+        default: github-action-auto-release
+        required: false
+      publish:
+        description: "Whether to publish a new release immediately"
+        type: boolean
+        required: false
+        default: true
+      prerelease:
+        description: "Boolean indicating whether this release should be a prerelease"
+        type: boolean
+        required: false
+        default: false
+    secrets:
+      token:
+        description: "Standard GitHub token (e.g., secrets.GITHUB_TOKEN)"
+        required: false
+
+jobs:
+  auto-release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: cloudposse/github-action-auto-release@bake-in-config-file
+      with:
+        actions-files-checkout-path: ${{ inputs.actions-files-checkout-path }}
+        prerelease: ${{ inputs.prerelease }}
+        publish: ${{ inputs.publish }}
+        token: ${{ secrets.token }}

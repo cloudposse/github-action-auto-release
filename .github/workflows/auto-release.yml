@@ -9,10 +9,11 @@ on:
 
 jobs:
   auto-release:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: cloudposse/github-action-auto-release@bake-in-config-file
-      with:
-        prerelease: false
-        publish: true
-        token: ${{ secrets.GITHUB_TOKEN }}
+
+    uses: cloudposse/github-action-auto-release/.github/workflows/auto-release-reusable@bake-in-config-file
+    with:
+      actions-files-checkout-path: github-action-auto-release
+      prerelease: false
+      publish: true
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
