@@ -20,6 +20,10 @@ inputs:
 runs:
   using: "composite"
   steps:
+    # Checkout current commit in calling repo
+    - name: "Checkout commit"
+      uses: actions/checkout@v2
+
     # Get PR from merged commit to master so we can leverage some of the meta data, including labels
     - uses: actions-ecosystem/action-get-merged-pull-request@v1
       id: get-merged-pull-request
