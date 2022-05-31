@@ -26,7 +26,7 @@ jobs:
   auto-release:
     runs-on: ubuntu-latest
     steps:
-    - uses: cloudposse/github-action-auto-release@bake-in-config-file
+    - uses: cloudposse/github-action-auto-release@main
       with:
         actions-files-checkout-path: ${{ inputs.actions-files-checkout-path }}
         prerelease: ${{ inputs.prerelease }}

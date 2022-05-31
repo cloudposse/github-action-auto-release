@@ -9,7 +9,7 @@ on:
 
 jobs:
   auto-release:
-    uses: cloudposse/github-action-auto-release/.github/workflows/auto-release-reusable.yml@bake-in-config-file
+    uses: cloudposse/github-action-auto-release/.github/workflows/auto-release-reusable.yml@main
     with:
       actions-files-checkout-path: github-action-auto-release
       prerelease: false
