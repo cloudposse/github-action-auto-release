@@ -1,0 +1,33 @@
+name: "auto-release-reusable"
+on:
+  workflow_call:
+    inputs:
+      actions-files-checkout-path:
+        description: "The path on the GitHub runner to which the action scripts should be checked out at runtime. (This should only be modified from the default if the calling repo somehow has a folder with the same name as the default value.)"
+        type: string
+        default: github-action-auto-release
+        required: false
+      publish:
+        description: "Flag indicating whether to create a new release immediately (true) or just add changes to release draft (false)"
+        type: boolean
+        required: false
+        default: true
+      prerelease:
+        description: "Flag indicating whether this release should be a prerelease (true) or a standard release (false)"
+        type: boolean
+        required: false
+        default: false
+    secrets:
+      token:
+        description: "Standard GitHub token used for creating new release (passing in secrets.GITHUB_TOKEN would be sufficient)"
+
+jobs:
+  auto-release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: cloudposse/github-action-auto-release@main
+      with:
+        actions-files-checkout-path: ${{ inputs.actions-files-checkout-path }}
+        prerelease: ${{ inputs.prerelease }}
+        publish: ${{ inputs.publish }}
+        token: ${{ secrets.token }}
