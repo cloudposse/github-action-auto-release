@@ -13,7 +13,7 @@ jobs:
     # For development reasons, this action is pinned to the `main` branch.
     # However, we recommend that you choose a specific release to pin to.
     # Consult https://github.com/cloudposse/github-action-auto-release/releases for a list of available releases.
-    uses: cloudposse/github-action-auto-release/.github/workflows/auto-release-reusable.yml@main
+    uses: cloudposse/github-action-auto-release/.github/workflows/auto-release-reusable.yml@1.0.0
     with:
       actions-files-checkout-path: github-action-auto-release
       prerelease: false
