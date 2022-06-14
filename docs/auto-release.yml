@@ -39,8 +39,6 @@ change-template: |
   <details>
     <summary>$TITLE @$AUTHOR (#$NUMBER)</summary>
 
-    TEST HEADING --
-
     $BODY
   </details>
 
