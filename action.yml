@@ -43,7 +43,7 @@ runs:
       run: |
         ls -ahlt .
         ls -ahlt ./.github/
-        cp ./${{ inputs.actions-files-checkout-path }}/docs/auto-release.yml ./.github/auto-release.yml
+        cp ./${{ inputs.actions-files-checkout-path }}/docs/auto-release.yml ./.github/auto-release-debug-2.yml
         #ln -s ./${{ inputs.actions-files-checkout-path }}/docs/auto-release.yml ./.github/auto-release.yml
         #ln ./${{ inputs.actions-files-checkout-path }}/docs/auto-release.yml ./.github/auto-release.yml
         ls -ahlt ./.github/
@@ -55,7 +55,7 @@ runs:
       with:
         publish: ${{ inputs.publish || !contains(steps.get-merged-pull-request.outputs.labels, 'no-release') }}
         prerelease: ${{ inputs.prerelease }}
-        config-name: auto-release-debug.yml
+        config-name: auto-release-debug-2.yml
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
 
