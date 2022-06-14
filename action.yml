@@ -55,7 +55,7 @@ runs:
       with:
         publish: ${{ inputs.publish || !contains(steps.get-merged-pull-request.outputs.labels, 'no-release') }}
         prerelease: ${{ inputs.prerelease }}
-        config-name: auto-release.yml
+        config-name: auto-release-debug.yml
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
 
