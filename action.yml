@@ -38,13 +38,14 @@ runs:
         path: ${{ inputs.actions-files-checkout-path }}
 
     # Move the config file to a location where it'll be found by the release-drafter step.
-    - name: "Move auto-release config file to searchable directory"
+    - name: "Move auto-release config file to the .github directory"
       shell: bash
       run: |
         ls -ahlt .
         ls -ahlt ./.github/
         #cp ./${{ inputs.actions-files-checkout-path }}/docs/auto-release.yml ./.github/auto-release.yml
-        ln -s ./${{ inputs.actions-files-checkout-path }}/docs/auto-release.yml ./.github/auto-release.yml
+        #ln -s ./${{ inputs.actions-files-checkout-path }}/docs/auto-release.yml ./.github/auto-release.yml
+        ln ./${{ inputs.actions-files-checkout-path }}/docs/auto-release.yml ./.github/auto-release.yml
         ls -ahlt ./.github/
         cat ./.github/auto-release.yml || echo "linked file not found"
         cat ./${{ inputs.actions-files-checkout-path }}/docs/auto-release.yml || echo "original file not found"
@@ -57,3 +58,9 @@ runs:
         config-name: auto-release.yml
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
+
+    ## Remove the temporary config file
+    #- name: "Remove auto-release config file from the .github directory"
+    #  shell: bash
+    #  run: |
+    #    rm .github/auto-release.yml
