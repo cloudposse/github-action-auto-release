@@ -43,9 +43,9 @@ runs:
       run: |
         ls -ahlt .
         ls -ahlt ./.github/
-        #cp ./${{ inputs.actions-files-checkout-path }}/docs/auto-release.yml ./.github/auto-release.yml
+        cp ./${{ inputs.actions-files-checkout-path }}/docs/auto-release.yml ./.github/auto-release.yml
         #ln -s ./${{ inputs.actions-files-checkout-path }}/docs/auto-release.yml ./.github/auto-release.yml
-        ln ./${{ inputs.actions-files-checkout-path }}/docs/auto-release.yml ./.github/auto-release.yml
+        #ln ./${{ inputs.actions-files-checkout-path }}/docs/auto-release.yml ./.github/auto-release.yml
         ls -ahlt ./.github/
         cat ./.github/auto-release.yml || echo "linked file not found"
         cat ./${{ inputs.actions-files-checkout-path }}/docs/auto-release.yml || echo "original file not found"
