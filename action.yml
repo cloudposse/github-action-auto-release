@@ -1,10 +1,6 @@
 name: "auto-release"
 description: "Automatically draft release notes for your next release as Pull Requests are merged into main. Optionally, automatically publish a release for every Pull Request."
 inputs:
-  actions-files-checkout-path:
-    description: "The path on the GitHub runner to which action scripts are checked out at runtime. (This should only be modified from the default if the calling repo somehow has a folder with the same name as the default value.)"
-    default: github-action-auto-release
-    required: false
   token:
     description: "Standard GitHub token (e.g., secrets.GITHUB_TOKEN)"
     required: false
@@ -30,37 +26,11 @@ runs:
       with:
         github_token: ${{ inputs.token }}
 
-    # We need to checkout the config file for this action within a specified workdir to access it within the container steps.
-    - name: "Checkout github-action-auto-format repo to load script locally on runner"
-      uses: actions/checkout@v2
-      with:
-        repository: cloudposse/github-action-auto-release
-        path: ${{ inputs.actions-files-checkout-path }}
-
-    # Move the config file to a location where it'll be found by the release-drafter step.
-    - name: "Move auto-release config file to the .github directory"
-      shell: bash
-      run: |
-        ls -ahlt .
-        ls -ahlt ./.github/
-        cp ./${{ inputs.actions-files-checkout-path }}/docs/auto-release.yml ./.github/auto-release-debug-2.yml
-        #ln -s ./${{ inputs.actions-files-checkout-path }}/docs/auto-release.yml ./.github/auto-release.yml
-        #ln ./${{ inputs.actions-files-checkout-path }}/docs/auto-release.yml ./.github/auto-release.yml
-        ls -ahlt ./.github/
-        cat ./.github/auto-release.yml || echo "linked file not found"
-        cat ./${{ inputs.actions-files-checkout-path }}/docs/auto-release.yml || echo "original file not found"
-
     # Drafts the next Release and compiles the notes as Pull Requests are merged into "main" (unless the `no-release` label is used on the PR)
     - uses: release-drafter/release-drafter@v5.20.0
       with:
         publish: ${{ inputs.publish || !contains(steps.get-merged-pull-request.outputs.labels, 'no-release') }}
         prerelease: ${{ inputs.prerelease }}
-        config-name: auto-release-debug-2.yml
+        config-name: auto-release-config.yml
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
-
-    ## Remove the temporary config file
-    #- name: "Remove auto-release config file from the .github directory"
-    #  shell: bash
-    #  run: |
-    #    rm .github/auto-release.yml

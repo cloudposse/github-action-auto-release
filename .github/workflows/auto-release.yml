@@ -19,7 +19,6 @@ jobs:
     # Consult https://github.com/cloudposse/github-action-auto-release/releases for a list of available releases.
     uses: cloudposse/github-action-auto-release/.github/workflows/auto-release-reusable.yml@main
     with:
-      actions-files-checkout-path: github-action-auto-release
       prerelease: false
       publish: true
     secrets:
