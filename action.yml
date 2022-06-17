@@ -26,10 +26,29 @@ runs:
       with:
         github_token: ${{ inputs.token }}
 
+    # Get list of all changed files in PR and test whether the PR only contains changes to README.* files
+    - name: "Check for changes only being present in README.* files"
+      id: file-changes
+      shell: bash
+      runs: |
+        if [[ $(git diff --name-only --diff-filter=ACMRT | grep -c -v "README") == 0 ]]; then
+          echo "::set-output name=only-readme::true"
+        else
+          echo "::set-output name=only-readme::false"
+        fi
+
+    # Add the `no-release` label to the PR if the only changes are in README.* files
+    - name: "Don't release on README.*-only changes"
+      if: steps.file-changes.only-readme
+      uses: actions-ecosystem/action-add-labels
+      with:
+        labels: no-release
+        number: ${{ steps.get-merged-pull-request.outputs.number }}
+
     # Drafts the next Release and compiles the notes as Pull Requests are merged into "main" (unless the `no-release` label is used on the PR)
     - uses: release-drafter/release-drafter@v5.20.0
       with:
-        publish: ${{ inputs.publish || !contains(steps.get-merged-pull-request.outputs.labels, 'no-release') }}
+        publish: ${{ inputs.publish || ( !contains(steps.get-merged-pull-request.outputs.labels, 'no-release') && !steps.file-changes.only-readme ) }}
         prerelease: ${{ inputs.prerelease }}
         config-name: auto-release-config.yml
       env:

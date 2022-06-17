@@ -10,7 +10,6 @@ on:
       - main
       - master
       - production
-  workflow_dispatch:
 
 jobs:
   auto-release:
