@@ -48,11 +48,12 @@ runs:
     # Drafts the next Release and compiles the notes as Pull Requests are merged into "main" (unless the `no-release` label is used on the PR)
     - uses: release-drafter/release-drafter@v5.20.0
       with:
-        # This boolean looks complicated, but it's just saying that we only publish if inputs.publish is true,
-        # or if the PR doesn't already have the no-release label and does have changes to non-README files.
-        # Unfortunately, the compound second condition is actually a relatively simple way to code this up, all things considered,
-        # since we use outputs from steps.get-merged-pull-request in steps.file-changes, meaning that we can't just switch
-        # the ordering of the action steps to avoid needing the && operator.
+        # The following boolean expression may appear complex, but its purpose is to only enable publishing if:
+        # 1. inputs.publish is true, or
+        # 2. the PR does not have the 'no-release' label and contains changes to files other than README.
+        # Due to the dependencies between steps.get-merged-pull-request and steps.file-changes, rearranging action steps
+        # is not a viable option to eliminate the use of the && operator, making this compound condition a relatively
+        # straightforward solution under the circumstances.
         publish: ${{ inputs.publish || ( !contains(steps.get-merged-pull-request.outputs.labels, 'no-release') && !steps.file-changes.only-readme ) }}
         prerelease: ${{ inputs.prerelease }}
         config-name: auto-release-config.yml
