@@ -43,6 +43,7 @@ runs:
           });
           
           const pull = resp.data.find(p => p.merge_commit_sha === sha);
+          console.log(pull);
           if (pull) {
             return {
               number: pull.number,
@@ -55,7 +56,7 @@ runs:
     # Drafts the next Release and compiles the notes as Pull Requests are merged into "main" (unless the `no-release` label is used on the PR)
     - uses: release-drafter/release-drafter@v5.20.0
       with:
-        publish: ${{ inputs.publish || !contains(steps.get-merged-pull-request.outputs.labels, 'no-release') }}
+        publish: ${{ inputs.publish || !contains(fromJson(steps.get-merged-pull-request.outputs.result).labels, 'no-release') }}
         prerelease: ${{ inputs.prerelease }}
         config-name: auto-release-config.yml
       env:
