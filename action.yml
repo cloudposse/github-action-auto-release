@@ -19,25 +19,15 @@ inputs:
       The config should still be located inside `.github` as that's where we are looking for config files.
     required: false
     default: 'release-drafter.yml'
-  disable-releaser:
-    description: |
-      A boolean indicating whether the releaser mode is disabled.
-    required: false
-    default: ''
 
 runs:
   using: "composite"
   steps:
-    # Checkout current commit in calling repo
-    - name: "Checkout commit"
+    - name: Checkout commit
       uses: actions/checkout@v2
 
     - uses: actions/github-script@v7
       id: pr-info
-      env:
-        REPO_OWNER: ${{ inputs.repo-owner }}
-        REPO_NAME: ${{ inputs.repo-name }}
-        PULL_NUMBER: ${{ inputs.pull-number }}
       with:
         retries: 3
         github_token: ${{ inputs.token }}
@@ -66,9 +56,8 @@ runs:
     # Drafts the next Release and compiles the notes as Pull Requests are merged into "main" (unless the `no-release` label is used on the PR)
     - uses: release-drafter/release-drafter@v5.25.0
       with:
-        publish: ${{ inputs.publish }}
-        disable-releaser: ${{ contains(fromJson(steps.pr-info.outputs.result).labels, 'no-release') }}
+        publish: ${{ inputs.publish && !contains(fromJson(steps.pr-info.outputs.result).labels, 'no-release')}}
         prerelease: ${{ inputs.prerelease }}
-        config-name: auto-release-config.yml
+        config-name: ${{ inputs.config-name }}
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
