@@ -4,6 +4,7 @@ inputs:
   token:
     description: "Standard GitHub token (e.g., secrets.GITHUB_TOKEN)"
     required: false
+    default: ${{ github.token }}
   publish:
     description: "Whether to publish a new release immediately"
     required: false
@@ -20,11 +21,36 @@ runs:
     - name: "Checkout commit"
       uses: actions/checkout@v2
 
-    # Get PR from merged commit to master so we can leverage some of the meta data, including labels
-    - uses: actions-ecosystem/action-get-merged-pull-request@v1
+    - uses: actions/github-script@v7
       id: get-merged-pull-request
+      env:
+        REPO_OWNER: ${{ inputs.repo-owner }}
+        REPO_NAME: ${{ inputs.repo-name }}
+        PULL_NUMBER: ${{ inputs.pull-number }}
       with:
+        retries: 3
         github_token: ${{ inputs.token }}
+        script: |
+          const repository = context.repo;
+          const sha = context.sha;
+          
+          const resp = await github.rest.pulls.list({
+            ...repository,
+            sort: 'updated',
+            direction: 'desc',
+            state: 'closed',
+            per_page: 100
+          });
+          
+          const pull = resp.data.find(p => p.merge_commit_sha === sha);
+          if (pull) {
+            return {
+              number: pull.number,
+              labels: pull.labels.map(l => l.name).join('\n')
+            };
+          };
+          
+          return {};
 
     # Drafts the next Release and compiles the notes as Pull Requests are merged into "main" (unless the `no-release` label is used on the PR)
     - uses: release-drafter/release-drafter@v5.20.0
