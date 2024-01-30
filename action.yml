@@ -8,11 +8,11 @@ inputs:
   publish:
     description: "Whether to publish a new release immediately"
     required: false
-    default: false
+    default: "false"
   prerelease:
     description: "Boolean indicating whether this release should be a prerelease"
     required: false
-    default: false
+    default: "false"
   config-name:
     description: |
       If your workflow requires multiple release-drafter configs it is helpful to override the config-name.
