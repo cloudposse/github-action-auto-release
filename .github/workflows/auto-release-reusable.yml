@@ -20,7 +20,7 @@ jobs:
   auto-release:
     runs-on: ubuntu-latest
     steps:
-    - uses: cloudposse/github-action-auto-release@1.12.0
+    - uses: cloudposse/github-action-auto-release@v1
       with:
         prerelease: ${{ inputs.prerelease }}
         publish: ${{ inputs.publish }}
