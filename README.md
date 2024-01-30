@@ -66,14 +66,14 @@ It's 100% Open Source and licensed under the [APACHE2](LICENSE).
 
 
 
-Copy the `.github/workflows/auto-release.yml` and `.github/auto-release.yml` files from this repository into the corresponding folders of the repository to which you'd like to add Auto-release functionality.
+Copy the `.github/workflows/auto-release.yml` and `.github/auto-release-config.yml` files from this repository into the corresponding folders of the repository to which you'd like to add Auto-release functionality.
 This will trigger the `auto-release` functionality every time merges are made into the default branch.
 
 ## Quick Start
 
 Here's how to get started...
 1. Copy the `.github/workflows/auto-release.yml` github action workflow from this repository into the corresponding folder of the target repo
-2. Copy the `.github/auto-release.yml` auto-release config file from this repository into the corresponding folder of the target repo
+2. Copy the `.github/auto-release-config.yml` auto-release config file from this repository into the corresponding folder of the target repo
 3. Customize the config file as desired, per the [config documentation](https://github.com/release-drafter/release-drafter#configuration)
 
 
@@ -184,7 +184,7 @@ In general, PRs are welcome. We follow the typical "fork-and-pull" Git workflow.
 
 ## Copyrights
 
-Copyright © 2022-2022 [Cloud Posse, LLC](https://cloudposse.com)
+Copyright © 2022-2024 [Cloud Posse, LLC](https://cloudposse.com)
 
 
 
@@ -253,7 +253,7 @@ Check out [our other projects][github], [follow us on twitter][twitter], [apply 
 
 [![README Footer][readme_footer_img]][readme_footer_link]
 [![Beacon][beacon]][website]
-
+<!-- markdownlint-disable -->
   [logo]: https://cloudposse.com/logo-300x69.svg
   [docs]: https://cpco.io/docs?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/github-action-auto-release&utm_content=docs
   [website]: https://cpco.io/homepage?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/github-action-auto-release&utm_content=website
@@ -284,3 +284,4 @@ Check out [our other projects][github], [follow us on twitter][twitter], [apply 
   [share_googleplus]: https://plus.google.com/share?url=https://github.com/cloudposse/github-action-auto-release
   [share_email]: mailto:?subject=GitHub+Action+Auto-release&body=https://github.com/cloudposse/github-action-auto-release
   [beacon]: https://ga-beacon.cloudposse.com/UA-76589703-4/cloudposse/github-action-auto-release?pixel&cs=github&cm=readme&an=github-action-auto-release
+<!-- markdownlint-restore -->

@@ -4,33 +4,60 @@ inputs:
   token:
     description: "Standard GitHub token (e.g., secrets.GITHUB_TOKEN)"
     required: false
+    default: ${{ github.token }}
   publish:
     description: "Whether to publish a new release immediately"
     required: false
-    default: true
+    default: "false"
   prerelease:
     description: "Boolean indicating whether this release should be a prerelease"
     required: false
-    default: false
+    default: "false"
+  config-name:
+    description: |
+      If your workflow requires multiple release-drafter configs it is helpful to override the config-name.
+      The config should still be located inside `.github` as that's where we are looking for config files.
+    required: false
+    default: 'release-drafter.yml'
 
 runs:
   using: "composite"
   steps:
-    # Checkout current commit in calling repo
-    - name: "Checkout commit"
+    - name: Checkout commit
       uses: actions/checkout@v2
 
-    # Get PR from merged commit to master so we can leverage some of the meta data, including labels
-    - uses: actions-ecosystem/action-get-merged-pull-request@v1
-      id: get-merged-pull-request
+    - uses: actions/github-script@v7
+      id: pr-info
       with:
+        retries: 3
         github_token: ${{ inputs.token }}
+        script: |
+          const repository = context.repo;
+          const sha = context.sha;
+          
+          const resp = await github.rest.pulls.list({
+            ...repository,
+            sort: 'updated',
+            direction: 'desc',
+            state: 'closed',
+            per_page: 100
+          });
+          
+          const pull = resp.data.find(p => p.merge_commit_sha === sha);
+          if (pull) {            
+            return {
+              number: pull.number,
+              labels: pull.labels.map(l => l.name).join('\n')
+            };
+          };
+          
+          return {};
 
     # Drafts the next Release and compiles the notes as Pull Requests are merged into "main" (unless the `no-release` label is used on the PR)
-    - uses: release-drafter/release-drafter@v5.20.0
+    - uses: release-drafter/release-drafter@v5.25.0
       with:
-        publish: ${{ inputs.publish || !contains(steps.get-merged-pull-request.outputs.labels, 'no-release') }}
+        publish: ${{ inputs.publish && !contains(fromJson(steps.pr-info.outputs.result).labels, 'no-release')}}
         prerelease: ${{ inputs.prerelease }}
-        config-name: auto-release-config.yml
+        config-name: ${{ inputs.config-name }}
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
