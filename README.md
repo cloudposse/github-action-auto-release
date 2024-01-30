@@ -108,7 +108,6 @@ Check out these related projects.
 
 For additional context, refer to some of these links.
 
-- [Action get Merged Pull Request](https://github.com/actions-ecosystem/action-get-merged-pull-request) - Get the pull request associated with a commit
 - [Release Drafter](https://github.com/release-drafter/release-drafter) - Drafts your next release notes as pull requests are merged into master
 
 
