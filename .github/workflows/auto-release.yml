@@ -14,5 +14,4 @@ jobs:
       - uses: cloudposse/github-action-auto-release@v1
         with:
           prerelease: false
-          publish: true
-          token: ${{ secrets.token }}
+          publish: false
