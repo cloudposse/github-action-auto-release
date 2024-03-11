@@ -12,7 +12,7 @@ inputs:
   prerelease:
     description: "Boolean indicating whether this release should be a prerelease"
     required: false
-    default: "false"
+    default: ""
   config-name:
     description: |
       If your workflow requires multiple release-drafter configs it is helpful to override the config-name.
@@ -27,6 +27,7 @@ runs:
       uses: actions/checkout@v4
 
     - uses: actions/github-script@v7
+      name: Get PR labels
       id: pr-info
       with:
         retries: 3
@@ -53,11 +54,37 @@ runs:
           
           return {};
 
+    - name: Check for duplicates
+      shell: bash
+      id: check-duplicate
+      run: |
+        latest_hash=$(git rev-parse ${{ github.ref_name }})
+        tags=$(git tag --contains "$latest_hash")
+        if [[ -n $tags ]]; then
+          echo "exists=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "exists=false" >> "$GITHUB_OUTPUT"
+        fi
+
     # Drafts the next Release and compiles the notes as Pull Requests are merged into "main" (unless the `no-release` label is used on the PR)
     - uses: release-drafter/release-drafter@v5
+      name: Draft release
+      id: release
+      if: steps.check-duplicate.outputs.exists == 'false'
       with:
         publish: ${{ inputs.publish == 'true' && !contains(fromJson(steps.pr-info.outputs.result).labels, 'no-release')}}
-        prerelease: ${{ inputs.prerelease }}
+        prerelease: ${{ (inputs.prerelease != '' && inputs.prerelease) || contains(fromJson(steps.pr-info.outputs.result).labels, 'prerelease') }}
         config-name: ${{ inputs.config-name }}
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
+
+    # Workaround for https://github.com/release-drafter/release-drafter/issues/1313
+    - name: Release Summary
+      if: steps.check-duplicate.outputs.exists == 'false'
+      shell: bash
+      run: |
+        echo 'Checking to make sure release id is not empty: "${{ steps.release.outputs.id }}"'
+        ! test -z "${{ steps.release.outputs.id }}"
+        echo '## ${{ steps.release.outputs.id }} (${{ steps.release.outputs.tag_name }})' >> $GITHUB_STEP_SUMMARY
+        echo '${{ steps.release.outputs.body}}' >> $GITHUB_STEP_SUMMARY
+        echo '[View Release](${{ steps.release.outputs.html_url }})' >> $GITHUB_STEP_SUMMARY
