@@ -4,33 +4,87 @@ inputs:
   token:
     description: "Standard GitHub token (e.g., secrets.GITHUB_TOKEN)"
     required: false
+    default: ${{ github.token }}
   publish:
     description: "Whether to publish a new release immediately"
     required: false
-    default: true
+    default: "false"
   prerelease:
     description: "Boolean indicating whether this release should be a prerelease"
     required: false
-    default: false
+    default: ""
+  config-name:
+    description: |
+      If your workflow requires multiple release-drafter configs it is helpful to override the config-name.
+      The config should still be located inside `.github` as that's where we are looking for config files.
+    required: false
+    default: 'configs/draft-release.yml'
 
 runs:
   using: "composite"
   steps:
-    # Checkout current commit in calling repo
-    - name: "Checkout commit"
-      uses: actions/checkout@v2
+    - name: Checkout commit
+      uses: actions/checkout@v4
 
-    # Get PR from merged commit to master so we can leverage some of the meta data, including labels
-    - uses: actions-ecosystem/action-get-merged-pull-request@v1
-      id: get-merged-pull-request
+    - uses: actions/github-script@v7
+      name: Get PR labels
+      id: pr-info
       with:
-        github_token: ${{ inputs.token }}
+        retries: 3
+        github-token: ${{ inputs.token }}
+        script: |
+          const repository = context.repo;
+          const sha = context.sha;
+          
+          const resp = await github.rest.pulls.list({
+            ...repository,
+            sort: 'updated',
+            direction: 'desc',
+            state: 'closed',
+            per_page: 100
+          });
+          
+          const pull = resp.data.find(p => p.merge_commit_sha === sha);
+          if (pull) {            
+            return {
+              number: pull.number,
+              labels: pull.labels.map(l => l.name).join('\n')
+            };
+          };
+          
+          return {};
+
+    - name: Check for duplicates
+      shell: bash
+      id: check-duplicate
+      run: |
+        latest_hash=$(git rev-parse ${{ github.ref_name }})
+        tags=$(git tag --contains "$latest_hash")
+        if [[ -n $tags ]]; then
+          echo "exists=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "exists=false" >> "$GITHUB_OUTPUT"
+        fi
 
     # Drafts the next Release and compiles the notes as Pull Requests are merged into "main" (unless the `no-release` label is used on the PR)
-    - uses: release-drafter/release-drafter@v5.20.0
+    - uses: release-drafter/release-drafter@v5
+      name: Draft release
+      id: release
+      if: steps.check-duplicate.outputs.exists == 'false'
       with:
-        publish: ${{ inputs.publish || !contains(steps.get-merged-pull-request.outputs.labels, 'no-release') }}
-        prerelease: ${{ inputs.prerelease }}
-        config-name: auto-release-config.yml
+        publish: ${{ inputs.publish == 'true' && !contains(fromJson(steps.pr-info.outputs.result).labels, 'no-release')}}
+        prerelease: ${{ (inputs.prerelease != '' && inputs.prerelease) || contains(fromJson(steps.pr-info.outputs.result).labels, 'prerelease') }}
+        config-name: ${{ inputs.config-name }}
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
+
+    # Workaround for https://github.com/release-drafter/release-drafter/issues/1313
+    - name: Release Summary
+      if: steps.check-duplicate.outputs.exists == 'false'
+      shell: bash
+      run: |
+        echo 'Checking to make sure release id is not empty: "${{ steps.release.outputs.id }}"'
+        ! test -z "${{ steps.release.outputs.id }}"
+        echo '## ${{ steps.release.outputs.id }} (${{ steps.release.outputs.tag_name }})' >> $GITHUB_STEP_SUMMARY
+        echo '${{ steps.release.outputs.body}}' >> $GITHUB_STEP_SUMMARY
+        echo '[View Release](${{ steps.release.outputs.html_url }})' >> $GITHUB_STEP_SUMMARY
