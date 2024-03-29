@@ -62,11 +62,7 @@ runs:
       id: check-duplicate
       run: |
         latest_hash=$(git rev-parse ${{ github.ref_name }})
-        git rev-parse ${{ github.ref_name }}
         tags=$(git tag --contains "$latest_hash")
-        git tag --contains "$latest_hash"
-        git tag --contains ${latest_hash}
-        echo "${tags}"
         if [[ -n $tags ]]; then
           echo "exists=true" >> "$GITHUB_OUTPUT"
         else
