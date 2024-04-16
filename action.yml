@@ -18,6 +18,11 @@ inputs:
       A string indicating whether the release being created or updated should be marked as latest.
     required: false
     default: ''
+  disable-releaser:
+    description: |
+      A boolean indicating whether the releaser mode is disabled.
+    required: false
+    default: 'false'    
   config-name:
     description: |
       If your workflow requires multiple release-drafter configs it is helpful to override the config-name.
@@ -118,6 +123,7 @@ runs:
         publish: ${{ inputs.publish == 'true' && !contains(fromJson(steps.pr-info.outputs.result).labels, 'no-release')}}
         prerelease: ${{ (inputs.prerelease != '' && inputs.prerelease) || contains(fromJson(steps.pr-info.outputs.result).labels, 'prerelease') }}
         latest: ${{ inputs.latest }}
+        disable-releaser: ${{ inputs.disable-releaser }}
         config-name: ${{ inputs.config-name }}
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
