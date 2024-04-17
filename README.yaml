@@ -45,6 +45,9 @@ related:
     description: "Validate and lint contents of CODEOWNERS file"
     url: "https://github.com/cloudposse/github-action-validate-codeowners"
 
+include:
+  - "docs/github-action.md"
+
 # References
 references:
   - name: "Release Drafter"
