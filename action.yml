@@ -25,6 +25,41 @@ inputs:
     required: false
     default: 'configs/draft-release.yml'
 
+outputs:
+  id:
+    description: The ID of therelease that was created or updated.
+    value: ${{ steps.release.outputs.id }}
+  name:
+    description: The name of the release
+    value: ${{ steps.release.outputs.name }}
+  tag_name:
+    description: The name of the tag associated with the release.
+    value: ${{ steps.release.outputs.tag_name }}
+  body:
+    description: The body of the drafted release.
+    value: ${{ steps.release.outputs.body }}
+  html_url:
+    description: The URL users can navigate to in order to view the release
+    value: ${{ steps.release.outputs.html_url }}
+  upload_url:
+    description: The URL for uploading assets to the release, which could be used by GitHub Actions for additional uses, for example the @actions/upload-release-asset GitHub Action.
+    value: ${{ steps.release.outputs.upload_url }}
+  major_version:
+    description: The next major version number. For example, if the last tag or release was v1.2.3, the value would be v2.0.0.
+    value: ${{ steps.release.outputs.major_version }}
+  minor_version:
+    description: The next minor version number. For example, if the last tag or release was v1.2.3, the value would be v1.3.0.
+    value: ${{ steps.release.outputs.minor_version }}
+  patch_version:
+    description: The next patch version number. For example, if the last tag or release was v1.2.3, the value would be v1.2.4.
+    value: ${{ steps.release.outputs.patch_version }}
+  resolved_version:
+    description: The next resolved version number, based on GitHub labels.
+    value: ${{ steps.release.outputs.resolved_version }}
+  exists:
+    description: Tag exists so skip new release issue
+    value: ${{ steps.check-duplicate.outputs.exists }}
+
 runs:
   using: "composite"
   steps:
