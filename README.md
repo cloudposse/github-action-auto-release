@@ -63,10 +63,10 @@ Here's a real world example:
 | Name | Description | Default | Required |
 |------|-------------|---------|----------|
 | config-name | If your workflow requires multiple release-drafter configs it is helpful to override the config-name.<br>The config should still be located inside `.github` as that's where we are looking for config files.<br> | configs/draft-release.yml | false |
-| enable-summary | Enable github action summary. | true | false |
 | latest | A string indicating whether the release being created or updated should be marked as latest.<br> |  | false |
 | prerelease | Boolean indicating whether this release should be a prerelease |  | false |
 | publish | Whether to publish a new release immediately | false | false |
+| summary-enabled | Enable github action summary. | true | false |
 | token | Standard GitHub token (e.g., secrets.GITHUB\_TOKEN) | ${{ github.token }} | false |
 
 

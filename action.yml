@@ -18,7 +18,7 @@ inputs:
       A string indicating whether the release being created or updated should be marked as latest.
     required: false
     default: ''
-  enable-summary:
+  summary-enabled:
     description: Enable github action summary.
     required: false
     default: 'true'
@@ -128,7 +128,7 @@ runs:
 
     # Workaround for https://github.com/release-drafter/release-drafter/issues/1313
     - name: Release Summary
-      if: ${{ steps.check-duplicate.outputs.exists == 'false' && inputs.enable-summary == 'true' }}
+      if: ${{ steps.check-duplicate.outputs.exists == 'false' && inputs.summary-enabled == 'true' }}
       shell: bash
       run: |
         echo 'Checking to make sure release id is not empty: "${{ steps.release.outputs.id }}"'
