@@ -130,11 +130,11 @@ runs:
     - name: Release Summary
       if: ${{ steps.check-duplicate.outputs.exists == 'false' && inputs.summary-enabled == 'true' }}
       shell: bash
-      run: |-
-       echo 'Checking to make sure release id is not empty: "${{ steps.release.outputs.id }}"'
-       ! test -z "${{ steps.release.outputs.id }}"
-       echo '## ${{ steps.release.outputs.id }} (${{ steps.release.outputs.tag_name }})' >> $GITHUB_STEP_SUMMARY
-       cat <<'EOT' >> $GITHUB_STEP_SUMMARY
-       ${{ steps.release.outputs.body}}
-       EOT        
-       echo '[View Release](${{ steps.release.outputs.html_url }})' >> $GITHUB_STEP_SUMMARY
+      run: |2
+        echo 'Checking to make sure release id is not empty: "${{ steps.release.outputs.id }}"'
+        ! test -z "${{ steps.release.outputs.id }}"
+        echo '## ${{ steps.release.outputs.id }} (${{ steps.release.outputs.tag_name }})' >> $GITHUB_STEP_SUMMARY
+        cat <<'EOT' >> $GITHUB_STEP_SUMMARY
+        ${{ steps.release.outputs.body}}
+        EOT        
+        echo '[View Release](${{ steps.release.outputs.html_url }})' >> $GITHUB_STEP_SUMMARY
