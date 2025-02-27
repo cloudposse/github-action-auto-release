@@ -121,6 +121,7 @@ runs:
       with:
         publish: ${{ inputs.publish == 'true' && !contains(fromJson(steps.pr-info.outputs.result).labels, 'no-release')}}
         prerelease: ${{ (inputs.prerelease != '' && inputs.prerelease) || contains(fromJson(steps.pr-info.outputs.result).labels, 'prerelease') }}
+        prerelease-identifier: 'rc'
         latest: ${{ inputs.latest }}
         config-name: ${{ inputs.config-name }}
       env:
