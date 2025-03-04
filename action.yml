@@ -124,6 +124,7 @@ runs:
         prerelease-identifier: 'rc'
         latest: ${{ inputs.latest }}
         config-name: ${{ inputs.config-name }}
+        commitish: "main"
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
 
