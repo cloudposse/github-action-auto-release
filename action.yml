@@ -111,7 +111,7 @@ runs:
           const repository = context.repo;
           const sha = context.sha;
           
-          const tags = await github.rest.git.getTag({
+          const tags = await github.rest.git.getCommit({
             ...repository,
             sha,
           });
