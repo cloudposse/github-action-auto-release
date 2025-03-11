@@ -105,6 +105,7 @@ runs:
       shell: bash
       id: check-duplicate
       run: |
+        git pull
         latest_hash=$(git rev-parse ${{ github.ref_name }})
         echo "${latest_hash}"
         tags=$(git tag --contains "$latest_hash")
