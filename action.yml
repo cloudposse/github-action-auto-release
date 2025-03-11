@@ -101,6 +101,25 @@ runs:
           
           return {};
 
+    - uses: actions/github-script@v7
+      name: Test
+      id: test
+      with:
+        retries: 3
+        github-token: ${{ inputs.token }}
+        script: |
+          const repository = context.repo;
+          const sha = context.sha;
+          
+          const tags = await github.rest.git.getTag({
+            ...repository,
+            sha,
+          });
+
+          console.log(tags);
+          
+          return {};
+
     - name: Check for duplicates
       shell: bash
       id: check-duplicate
