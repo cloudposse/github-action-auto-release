@@ -123,7 +123,7 @@ runs:
           const tags = ${{ steps.tags.outputs.value }}.split(" ");
 
           for (const tag of tags) {
-            const release = await octokit.rest.repos.getReleaseByTag({
+            const release = await github.rest.repos.getReleaseByTag({
               ...repository,
               tag,
             });
