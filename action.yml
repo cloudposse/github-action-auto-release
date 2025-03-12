@@ -128,7 +128,7 @@ runs:
               tag,
             });
 
-            if ( ! release.draft  $$ release.prerelease == ${{ inputs.prerelease }} ) {
+            if ( ! release.draft && release.prerelease == ${{ inputs.prerelease }} ) {
               return {exists: true};
             }
           }
