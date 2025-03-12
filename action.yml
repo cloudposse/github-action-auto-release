@@ -62,7 +62,7 @@ outputs:
     value: ${{ steps.release.outputs.resolved_version }}
   exists:
     description: Tag exists so skip new release issue
-    value: ${{ steps.check-duplicate.outputs.exists }}
+    value: ${{ steps.has-duplicate.outputs.result }}
 
 runs:
   using: "composite"
@@ -101,23 +101,47 @@ runs:
           
           return {};
 
-    - name: Check for duplicates
+    - name: Tags
       shell: bash
-      id: check-duplicate
+      id: tags
       run: |
+        git pull --tags
         latest_hash=$(git rev-parse ${{ github.ref_name }})
-        tags=$(git tag --contains "$latest_hash")
-        if [[ -n $tags ]]; then
-          echo "exists=true" >> "$GITHUB_OUTPUT"
-        else
-          echo "exists=false" >> "$GITHUB_OUTPUT"
-        fi
+        tags=$(git tag --contains "${latest_hash}" | jq -R --slurp  '. | sub("\n"; " "; "g") | rtrimstr(" ")')
+        echo "value=${tags}" >> $GITHUB_OUTPUT
+
+    - name: Check for duplicates
+      uses: actions/github-script@v7
+      id: has-duplicate
+      with:
+        retries: 3
+        github-token: ${{ inputs.token }}
+        result-encoding: string
+        script: |
+          const repository = context.repo;
+          const sha = context.sha;
+
+          const tags = ${{ steps.tags.outputs.value }}.split(" ");
+
+          for (const tag of tags) {
+            console.log("Getting: " + tag);
+            const release = await github.rest.repos.getReleaseByTag({
+              ...repository,
+              tag,
+            });
+            if ( ! release.data.draft && release.data.prerelease == ${{ inputs.prerelease }} ) {
+              console.log("Found release: " + tag);
+              return true;
+            }
+          }
+          console.log("No release found");
+          return false;
 
     # Drafts the next Release and compiles the notes as Pull Requests are merged into "main" (unless the `no-release` label is used on the PR)
     - uses: release-drafter/release-drafter@v6
       name: Draft release
       id: release
-      if: steps.check-duplicate.outputs.exists == 'false'
+      if: steps.has-duplicate.outputs.result == 'false'
       with:
         publish: ${{ inputs.publish == 'true' && !contains(fromJson(steps.pr-info.outputs.result).labels, 'no-release')}}
         prerelease: ${{ (inputs.prerelease != '' && inputs.prerelease) || contains(fromJson(steps.pr-info.outputs.result).labels, 'prerelease') }}
@@ -128,7 +152,7 @@ runs:
 
     # Workaround for https://github.com/release-drafter/release-drafter/issues/1313
     - name: Release Summary
-      if: ${{ steps.check-duplicate.outputs.exists == 'false' && inputs.summary-enabled == 'true' }}
+      if: ${{ steps.has-duplicate.outputs.result == 'false' && inputs.summary-enabled == 'true' }}
       shell: bash
       env:
         RELEASE_BODY: |-
