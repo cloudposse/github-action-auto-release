@@ -108,7 +108,6 @@ runs:
         git pull --tags
         latest_hash=$(git rev-parse ${{ github.ref_name }})
         tags=$(git tag --contains "$latest_hash")
-        printf '%s\n' "${tags[@]}"
 
     - uses: actions/github-script@v7
       name: Test
