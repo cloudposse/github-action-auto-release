@@ -124,14 +124,13 @@ runs:
           const tags = ${{ steps.tags.outputs.value }}.split(" ");
 
           for (const tag of tags) {
-            console.log("Getting: {tag}");
+            console.log("Getting: " + tag);
             const release = await github.rest.repos.getReleaseByTag({
               ...repository,
               tag,
             });
-            console.log(release)
             if ( ! release.data.draft && release.data.prerelease == ${{ inputs.prerelease }} ) {
-              console.log("Found release: {tag}");
+              console.log("Found release: " + tag);
               return true;
             }
           }
