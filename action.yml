@@ -121,10 +121,18 @@ runs:
           const sha = context.sha;
 
           const tags = ${{ steps.tags.outputs.value }}.split(" ");
-          
-          console.log(tags);
-          
-          return {};
+
+          for (const tag of tags) {
+            const release = await octokit.rest.repos.getReleaseByTag({
+              ...repository,
+              tag,
+            });
+
+            if ( ! release.draft  $$ release.prerelease == ${{ inputs.prerelease }} ) {
+              return {exists: true};
+            }
+          }
+          return {exists: false};
 
     - name: Check for duplicates
       shell: bash
