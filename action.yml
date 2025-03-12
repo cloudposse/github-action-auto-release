@@ -120,7 +120,7 @@ runs:
           const repository = context.repo;
           const sha = context.sha;
 
-          const tags = "${{ steps.tags.outputs.value }}".split(" ");
+          const tags = ${{ steps.tags.outputs.value }}.split(" ");
           
           console.log(tags);
           
