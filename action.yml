@@ -112,7 +112,6 @@ runs:
 
     - name: Check for duplicates
       uses: actions/github-script@v7
-      shell: bash
       id: check-duplicate
       with:
         retries: 3
