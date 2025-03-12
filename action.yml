@@ -123,16 +123,18 @@ runs:
           const tags = ${{ steps.tags.outputs.value }}.split(" ");
 
           for (const tag of tags) {
+            console.log("Getting: {tag}");
             const release = await github.rest.repos.getReleaseByTag({
               ...repository,
               tag,
             });
 
             if ( ! release.draft && release.prerelease == ${{ inputs.prerelease }} ) {
-              console.log("Found release: {tag}")
+              console.log("Found release: {tag}");
               return {exists: true};
             }
           }
+          console.log("No release found");
           return {exists: false};
 
     # Drafts the next Release and compiles the notes as Pull Requests are merged into "main" (unless the `no-release` label is used on the PR)
