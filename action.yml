@@ -108,7 +108,7 @@ runs:
         git pull --tags
         latest_hash=$(git rev-parse ${{ github.ref_name }})
         tags=$(git tag --contains "${latest_hash}" | jq -R --slurp  '. | sub("\n"; " "; "g") | rtrimstr(" ")')
-        echo "value=${tags}" > $GITHUB_OUTPUT
+        echo "value=${tags}" >> $GITHUB_OUTPUT
 
     - uses: actions/github-script@v7
       name: Test
@@ -120,7 +120,7 @@ runs:
           const repository = context.repo;
           const sha = context.sha;
 
-          const tags = "${{ steps.tags.output.value }}"
+          const tags = "${{ steps.tags.outputs.value }}"
           
           console.log(tags);
           
