@@ -108,8 +108,8 @@ runs:
         git pull --tags
         latest_hash=$(git rev-parse ${{ github.ref_name }})
         tags=$(git tag --contains "$latest_hash")
-        printf '%s\n' "${tags[@]}"
-        printf 'tags="%s\n"' "${tags[@]}" > $GITHUB_OUTPUT
+        IFS=$'\t' printf '%s\n' "${tags[@]}"
+        IFS=$'\t' printf 'tags="%s\n"' "${tags[@]}" > $GITHUB_OUTPUT
 
     - uses: actions/github-script@v7
       name: Test
