@@ -129,7 +129,7 @@ runs:
               ...repository,
               tag,
             });
-
+            console.log(release)
             if ( ! release.draft && release.prerelease == ${{ inputs.prerelease }} ) {
               console.log("Found release: {tag}");
               return true;
