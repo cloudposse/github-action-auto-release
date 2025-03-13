@@ -124,6 +124,9 @@ runs:
           const tags = ${{ steps.tags.outputs.value }}.split(" ");
 
           for (const tag of tags) {
+            if (tag == "") {
+              continue;
+            }
             console.log("Getting: " + tag);
             const release = await github.rest.repos.getReleaseByTag({
               ...repository,
