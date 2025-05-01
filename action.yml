@@ -131,8 +131,15 @@ runs:
             const release = await github.rest.repos.getReleaseByTag({
               ...repository,
               tag,
+            }).catch(function(error) {
+              if (error.status === 404) {
+                core.info(`Release v${VERSION} not found`)
+                return
+              } else {
+                throw error
+              }
             });
-            if ( ! release.data.draft && release.data.prerelease == ${{ inputs.prerelease }} ) {
+            if ( release && ! release.data.draft && release.data.prerelease == ${{ inputs.prerelease }} ) {
               console.log("Found release: " + tag);
               return true;
             }
