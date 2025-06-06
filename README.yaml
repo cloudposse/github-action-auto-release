@@ -1,4 +1,3 @@
----
 #
 # This is the canonical configuration for the `README.md`
 # Run `make readme` to rebuild the `README.md`
@@ -21,13 +20,17 @@ github_repo: cloudposse/github-action-auto-release
 
 # Badges to display
 badges:
-  - name: "Latest Release"
-    image: "https://img.shields.io/github/release/cloudposse/github-action-auto-release.svg"
-    url: "https://github.com/cloudposse/github-action-auto-release/releases/latest"
-  - name: "Slack Community"
-    image: "https://slack.cloudposse.com/badge.svg"
-    url: "https://slack.cloudposse.com"
+  - name: Latest Release
+    image: https://img.shields.io/github/release/cloudposse/github-action-auto-release.svg?style=for-the-badge
+    url: https://github.com/cloudposse/github-action-auto-release/releases/latest
+  - name: Last Updated
+    image: https://img.shields.io/github/last-commit/cloudposse/github-action-auto-release.svg?style=for-the-badge
+    url: https://github.com/cloudposse/github-action-auto-release/commits
+  - name: Slack Community
+    image: https://slack.cloudposse.com/for-the-badge.svg
+    url: https://cloudposse.com/slack
 
+# List any related terraform modules that this module may be used with or that this module depends on.
 related:
   - name: "GitHub Action Auto-format"
     description: "Add standard files to a repo and keep its README up to date"
@@ -42,10 +45,7 @@ related:
     description: "Validate and lint contents of CODEOWNERS file"
     url: "https://github.com/cloudposse/github-action-validate-codeowners"
 
-include:
-  - "docs/github-action.md"
-
-# References
+include: []
 references:
   - name: "Release Drafter"
     description: 'Drafts your next release notes as pull requests are merged into master'
@@ -75,6 +75,4 @@ quickstart: |-
   3. Customize the config file as desired, per the [config documentation](https://github.com/release-drafter/release-drafter#configuration)
 
 # Contributors to this project
-contributors:
-  - name: "Dylan Bannon"
-    github: "dylanbannon"
+contributors: []
