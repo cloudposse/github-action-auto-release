@@ -156,6 +156,7 @@ runs:
         prerelease: ${{ (inputs.prerelease != '' && inputs.prerelease) || contains(fromJson(steps.pr-info.outputs.result).labels, 'prerelease') }}
         latest: ${{ inputs.latest }}
         config-name: ${{ inputs.config-name }}
+        commitish: "refs/heads/DEV-3331/feature-branch-rc-2"
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
 
