@@ -105,9 +105,8 @@ runs:
       shell: bash
       id: tags
       run: |
-        git pull --tags
-        latest_hash=$(git rev-parse ${{ github.ref_name }})
-        tags=$(git tag --contains "${latest_hash}" | jq -R --slurp  '. | sub("\n"; " "; "g") | rtrimstr(" ")')
+        git fetch --tags
+        tags=$(git tag --contains ${{ github.sha }} | jq -R --slurp  '. | sub("\n"; " "; "g") | rtrimstr(" ")')
         echo "value=${tags}" >> $GITHUB_OUTPUT
 
     - name: Check for duplicates
@@ -157,6 +156,7 @@ runs:
         prerelease: ${{ (inputs.prerelease != '' && inputs.prerelease) || contains(fromJson(steps.pr-info.outputs.result).labels, 'prerelease') }}
         latest: ${{ inputs.latest }}
         config-name: ${{ inputs.config-name }}
+        commitish: ${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
 
