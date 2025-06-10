@@ -107,7 +107,7 @@ runs:
       run: |
         git fetch --tags
         latest_hash=$(git rev-parse ${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }})
-        tags=$(git tag --contains "${latest_hash}" | jq -R --slurp  '. | sub("\n"; " "; "g") | rtrimstr(" ")')        
+        tags=$(git tag --contains "${latest_hash}" | jq -R --slurp  '. | sub("\n"; " "; "g") | rtrimstr(" ")')
         echo "value=${tags}" >> $GITHUB_OUTPUT
 
     - name: Check for duplicates
