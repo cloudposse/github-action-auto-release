@@ -68,12 +68,12 @@ runs:
   using: "composite"
   steps:
     - name: Checkout commit
-      uses: actions/checkout@v4
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
         token: ${{ inputs.token }}
         fetch-tags: true
 
-    - uses: actions/github-script@v7
+    - uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
       name: Get PR labels
       id: pr-info
       with:
@@ -110,7 +110,7 @@ runs:
         echo "value=${tags}" >> $GITHUB_OUTPUT
 
     - name: Check for duplicates
-      uses: actions/github-script@v7
+      uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
       id: has-duplicate
       with:
         retries: 3
@@ -147,11 +147,12 @@ runs:
           return false;
 
     # Drafts the next Release and compiles the notes as Pull Requests are merged into "main" (unless the `no-release` label is used on the PR)
-    - uses: release-drafter/release-drafter@v6
+    - uses: release-drafter/release-drafter@34d80673e067bdc0c24568d3af899c216adcfaa9 # v7.7.0
       name: Draft release
       id: release
       if: steps.has-duplicate.outputs.result == 'false'
       with:
+        token: ${{ inputs.token }}
         publish: ${{ inputs.publish == 'true' && !contains(fromJson(steps.pr-info.outputs.result).labels, 'no-release')}}
         prerelease: ${{ (inputs.prerelease != '' && inputs.prerelease) || contains(fromJson(steps.pr-info.outputs.result).labels, 'prerelease') }}
         latest: ${{ inputs.latest }}
